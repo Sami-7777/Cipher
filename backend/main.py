@@ -1,9 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
-from models import ScanRequest, ScanResponse, MedicineInfo
-from database import MEDICINES
-from logic import calculate_risk, save_log
+from backend.models import ScanRequest, ScanResponse, MedicineInfo
+from backend.database import MEDICINES
+from backend.logic import calculate_risk, save_log
 
 app = FastAPI(title="MedVerify API", version="1.0")
 
@@ -46,7 +46,7 @@ def verify_medicine(req: ScanRequest):
 
 @app.get("/scans")
 def get_scan_history():
-    from logic import load_logs
+    from backend.logic import load_logs
     return {"scans": load_logs()}
 
 @app.delete("/scans/reset")
