@@ -1,0 +1,69 @@
+     from fastapi import FastAPI
+from pydantic import BaseModel
+from datetime import datetime
+from database import MedicineDatabase
+
+app = FastAPI()
+db = MedicineDatabase()
+
+class ScanRequest(BaseModel):
+    qr_code: str
+    location_city: str
+    lat: float = None
+    long: float = None
+    device_id: str = None
+    is_offline: bool = False
+
+@app.post("/scan")
+def scan_qr(request: ScanRequest):
+    """
+    Scan a QR code and get risk assessment
+    """
+    db.log_scan(
+        qr_code=request.qr_code,
+        location_city=request.location_city,
+        lat=request.lat,
+        long=request.long,
+        device_id=request.device_id,
+        is_offline=request.is_offline
+    )
+    
+    result = db.check_duplicate_scan(
+        qr_code=request.qr_code,
+        location_city=request.location_city,
+        scan_timestamp=datetime.now()
+    )
+    
+    medicine = db.get_medicine_by_qr(request.qr_code)
+    
+    return {
+        "status": result["status"],
+        "risk_score": result["risk_score"],
+        "reason": result["reason"],
+        "medicine": medicine
+    }
+
+@app.get("/medicine/{qr_code}")
+def get_medicine(qr_code: str):
+    """Get medicine details"""
+    medicine = db.get_medicine_by_qr(qr_code)
+    return {"medicine": medicine} if medicine else {"error": "Medicine not found"}
+
+@app.get("/scan-history/{qr_code}")
+def get_scan_history(qr_code: str):
+    """Get scan history for a QR code"""
+    history = db.get_scan_history(qr_code)
+    return {
+        "qr_code": qr_code,
+        "total_scans": len(history),
+        "history": history
+    }
+
+@app.get("/")
+def health_check():
+    """Health check"""
+    return {
+        "status": "API Running",
+        "system": "Medicine Verification System",
+        "endpoints": ["/scan", "/medicine/{qr_code}", "/scan-history/{qr_code}"]
+    }
