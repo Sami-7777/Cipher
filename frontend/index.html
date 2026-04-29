@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counterfeit Medicine Detection - Scanner</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">🛡️ MedicineVerify</h1>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Scanner</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="map.html" class="nav-link">Map</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="scanner-page">
+        <div class="container">
+                <div class="scanner-card">
+                    <h2>📱 Scan Medicine QR Code</h2>
+                    <p>Point your camera at the QR code on medicine packaging</p>
+                    
+                    <!-- Manual Input Fallback -->
+                    <div id="manual-input" class="manual-input hidden">
+                        <input type="text" id="manual-qr-input" placeholder="Enter QR Code manually (MED123|BATCH01)">
+                        <button id="verify-manual" class="btn">Verify Manually</button>
+                    </div>
+                    
+                    <div id="reader" style="width: 100%; max-width: 500px;"></div>
+                    
+                    <!-- Loading Spinner -->
+                    <div id="loading-spinner" class="loading-spinner hidden"></div>
+                    
+                    <!-- Results -->
+                    <div id="result" class="result-card hidden">
+                        <div class="result-content">
+                            <h3 id="status"></h3>
+                            <p id="medicine-name"></p>
+                            <p id="batch-info"></p>
+                            <p id="expiry-date"></p>
+                            <p id="location-info"></p>
+                            <div id="risk-score" class="risk-badge"></div>
+                            <p id="reason"></p>
+                        </div>
+                    </div>
+                    <button id="scan-again" class="btn hidden">Scan Again 🔄</button>
+                </div>
+
+                <!-- Smart Alert Modal -->
+                <div id="alert-modal" class="modal">
+                    <div class="modal-content">
+                        <button class="close-modal">&times;</button>
+                        <div id="modal-message" style="font-size: 1.2rem; margin-bottom: 1rem;"></div>
+                        <p style="color: #64748b; margin-bottom: 2rem;">Your scan has been recorded</p>
+                        <button onclick="scanner.scanAgain()" class="btn" style="width: 100%;">Scan Another</button>
+                    </div>
+                </div>
+        </div>
+    </main>
+
+    <script src="js/scanner.js"></script>
+</body>
+</html>
