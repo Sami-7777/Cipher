@@ -1,0 +1,38 @@
+MEDICINES = {
+    "MED-20241102-A": {
+        "name": "Paracetamol 500mg",
+        "manufacturer": "Sun Pharma",
+        "batch": "SP-2024-110",
+        "expiry": "2026-06",
+        "max_scans": 3,
+        "origin_city": "Chennai",
+        "registered": True,
+    },
+    "MED-20241215-B": {
+        "name": "Azithromycin 250mg",
+        "manufacturer": "Cipla Ltd",
+        "batch": "CL-2024-215",
+        "expiry": "2025-12",
+        "max_scans": 4,
+        "origin_city": "Mumbai",
+        "registered": True,
+    },
+    "MED-20250301-C": {
+        "name": "Metformin 500mg",
+        "manufacturer": "Dr. Reddys",
+        "batch": "DR-2025-301",
+        "expiry": "2027-03",
+        "max_scans": 5,
+        "origin_city": "Hyderabad",
+        "registered": True,
+    },
+    "MED-20250410-D": {
+        "name": "Amoxicillin 500mg",
+        "manufacturer": "Mankind Pharma",
+        "batch": "MK-2025-410",
+        "expiry": "2026-10",
+        "max_scans": 3,
+        "origin_city": "Delhi",
+        "registered": True,
+    },
+}
